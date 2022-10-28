@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,4 +14,33 @@ model Integration {
   participants      Int
   date_start        DateTime
   date_end          DateTime
+  versions          Version[]
+  categories        Category[]
+}
+
+model Version {
+  id                Int             @id @default(autoincrement())
+  name              String
+  integration       Integration     @relation(fields: [integrationId], references: [id])
+  integrationId     Int
+  categoryItems     CategoryItem[]
+}
+
+model Category {
+  id                Int             @id @default(autoincrement())
+  name              String
+  integration       Integration     @relation(fields: [integrationId], references: [id])
+  integrationId     Int
+  items             CategoryItem[]
+}
+
+model CategoryItem {
+  id                Int             @id @default(autoincrement())
+  name              String
+  cost              Int
+  per_participant   Boolean
+  version           Version         @relation(fields: [versionId], references: [id])
+  versionId         Int
+  category          Category        @relation(fields: [categoryId], references: [id])
+  categoryId        Int
 }
