@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { DatabaseService } from "@synergy-forge/api/database";
 
-export abstract class AbstractService<T> {
+export abstract class AbstractService<T, CreateTDto, UpdateTDto> {
   protected entityName!: string;
 
   constructor(protected db: DatabaseService) {
@@ -27,7 +27,7 @@ export abstract class AbstractService<T> {
     }
   }
 
-  async create(data: Partial<T>): Promise<T> {
+  async create(data: CreateTDto): Promise<T> {
     try {
       // @ts-ignore
       return await this.db[this.entityName].create({data});
@@ -37,7 +37,7 @@ export abstract class AbstractService<T> {
     }
   }
 
-  async update(id: number, data: Partial<T>): Promise<T> {
+  async update(id: number, data: UpdateTDto): Promise<T> {
     try {
       // @ts-ignore
       return await this.db[this.entityName].update({
