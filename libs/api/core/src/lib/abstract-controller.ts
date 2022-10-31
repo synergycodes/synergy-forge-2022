@@ -2,6 +2,8 @@ import { Body, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { AbstractService } from "./abstract-service";
 
 export abstract class AbstractController<T> {
+
+  // @ts-ignore
   constructor(protected service: AbstractService<T>) {
   }
 

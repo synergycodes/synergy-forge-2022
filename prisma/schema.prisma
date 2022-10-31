@@ -12,6 +12,7 @@ model Integration {
   name              String
   budget            Int
   participants      Int
+  picture           String?
   date_start        DateTime
   date_end          DateTime
   versions          Version[]
