@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Integration } from '@synergy-forge/shared/data-access';
+import { Integration } from '@prisma/client';
 
 @Component({
   selector: 'synergy-forge-integration-item',

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IntegrationsService } from '@synergy-forge/frontend/core';
 import { Observable } from 'rxjs';
-import { Integration } from '@synergy-forge/shared/data-access';
+import { Integration } from '@prisma/client';
 
 @Component({
   selector: 'synergy-forge-integration-list',
@@ -12,7 +12,8 @@ import { Integration } from '@synergy-forge/shared/data-access';
 export class IntegrationListComponent implements OnInit {
   integrations$!: Observable<Integration[]>;
 
-  constructor(private integrationService: IntegrationsService) {}
+  constructor(private integrationService: IntegrationsService) {
+  }
 
   ngOnInit(): void {
     this.integrations$ = this.integrationService.getAll();
