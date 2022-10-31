@@ -9,3 +9,4 @@ export class CategoryItemsController extends AbstractController<CategoryItemEnti
     super(service);
   }
 }
+

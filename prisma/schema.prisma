@@ -31,7 +31,7 @@ model Category {
   name              String
   integration       Integration     @relation(fields: [integrationId], references: [id])
   integrationId     Int
-  items             CategoryItem[]
+  categoryItems     CategoryItem[]
 }
 
 model CategoryItem {
