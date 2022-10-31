@@ -14,7 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@synergy-forge/api/database": ["libs/api/database/src/index.ts"],
+      "@synergy-forge/api/integrations": ["libs/api/integrations/src/index.ts"],
+      "@synergy-forge/frontend/core": ["libs/frontend/core/src/index.ts"],
+      "@synergy-forge/frontend/integrations": [
+        "libs/frontend/integrations/src/index.ts"
+      ],
+      "@synergy-forge/shared/data-access": [
+        "libs/shared/data-access/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
