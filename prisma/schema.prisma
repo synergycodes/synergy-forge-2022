@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Integration {
+  id                Int             @id @default(autoincrement())
+  name              String
+  budget            Int
+  participants      Int
+  picture           String?
+  date_start        DateTime
+  date_end          DateTime
+  versions          Version[]
+  categories        Category[]
+}
+
+model Version {
+  id                Int             @id @default(autoincrement())
+  name              String
+  integration       Integration     @relation(fields: [integrationId], references: [id])
+  integrationId     Int
+  categoryItems     CategoryItem[]
+}
+
+model Category {
+  id                Int             @id @default(autoincrement())
+  name              String
+  integration       Integration     @relation(fields: [integrationId], references: [id])
+  integrationId     Int
+  categoryItems     CategoryItem[]
+}
+
+model CategoryItem {
+  id                Int             @id @default(autoincrement())
+  name              String
+  cost              Int
+  per_participant   Boolean
+  version           Version         @relation(fields: [versionId], references: [id])
+  versionId         Int
+  category          Category        @relation(fields: [categoryId], references: [id])
+  categoryId        Int
+}
