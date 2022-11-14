@@ -14,13 +14,13 @@ tags:
   - name: Integrations
     description: Integration event. Integration can have multiple Versions.
 
-  - name: Version
+  - name: Versions
     description: A single version of the integration - with budget and number of participants. Each version may be different within same integration.
 
-  - name: Category
+  - name: Categories
     description: Grouping category for the expense. Each category can have multiple expenses.
 
-  - name: Category Item
+  - name: CategoryItems
     description: Single expense (with value) within a Category and Version.
 
 
@@ -107,7 +107,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items:
                   $ref: '#/components/schemas/Integration'
         '400':
@@ -143,8 +143,9 @@ paths:
           required: true
           schema:
             type: number
-      summary: Finds integration by ID and returns entire object with related variations, categories and category items
-      operationId: findOne
+      summary: Finds full integration by ID
+      description: Finds integration by id and returns entire object with related variations, categories and category items
+      operationId: findFull
       responses:
         '200':
           description: successful operation
@@ -198,7 +199,7 @@ paths:
   /versions/{versionId}:
     get:
       tags:
-        - Version
+        - Versions
       parameters:
         - name: versionId
           in: path
@@ -267,7 +268,7 @@ paths:
   /versions/{versionId}/duplicate:
     post:
       tags:
-        - Version
+        - Versions
       parameters:
         - name: versionId
           in: path
@@ -399,7 +400,7 @@ paths:
   /category-items:
     get:
       tags:
-        - Category Item
+        - CategoryItems
       summary: Get all categories
       description: Gets all available categories
       operationId: findAll
@@ -415,7 +416,7 @@ paths:
                   $ref: '#/components/schemas/CategoryItem'
     post:
       tags:
-        - Category Item
+        - CategoryItems
       summary: Create new category
       description: Create new CategoryItem
       operationId: create
@@ -437,7 +438,7 @@ paths:
   /category-items/{categoryItemId}:
     get:
       tags:
-        - Category Item
+        - CategoryItems
       parameters:
         - name: categoryItemId
           in: path
@@ -461,7 +462,7 @@ paths:
 
     patch:
       tags:
-        - Category Item
+        - CategoryItems
       summary: Updates a CategoryItem
       description: update CategoryItem
       operationId: update
@@ -486,7 +487,7 @@ paths:
 
     delete:
       tags:
-        - Category Items
+        - CategoryItems
       summary: Deletes a CategoryItem
       description: delete a CategoryItem
       operationId: delete
@@ -587,14 +588,3 @@ components:
         perParticipant:
           type: boolean
           example: false
-
-  requestBodies:
-    Pet:
-      description: Pet object that needs to be added to the store
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Pet'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Pet'
