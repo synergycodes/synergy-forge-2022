@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AbstractService } from "@synergy-forge/api/core";
 import { DatabaseService } from "@synergy-forge/api/database";
 import { VersionEntity } from "../entities/version.entity";
@@ -9,7 +9,7 @@ import { CreateCategoryItemDto } from "../../../../category-items/src/lib/dto/cr
 @Injectable()
 export class VersionsService extends AbstractService<VersionEntity, CreateVersionDto, UpdateVersionDto> {
 
-  constructor(protected db: DatabaseService) {
+  constructor(protected override db: DatabaseService) {
     super(db);
     this.entityName = 'version';
   }
@@ -18,7 +18,8 @@ export class VersionsService extends AbstractService<VersionEntity, CreateVersio
     const versionToCopy: VersionEntity = await this.findOne(+originId);
 
     if (!versionToCopy) {
-      throw new Error('Version not found');
+      throw new HttpException(`Version not found`, HttpStatus.NOT_FOUND);
+
     }
 
     const {name, id, integrationId} = versionToCopy;
@@ -26,7 +27,6 @@ export class VersionsService extends AbstractService<VersionEntity, CreateVersio
     const catItemsToCopy = await this.db.categoryItem.findMany({where: {versionId: id}});
 
     try {
-
       const versionCopy: VersionEntity = await this.create({name: name + ' copy', integrationId});
 
       const newCatItems: CreateCategoryItemDto[] = catItemsToCopy.map(item => {
@@ -41,8 +41,7 @@ export class VersionsService extends AbstractService<VersionEntity, CreateVersio
       await Promise.all(newCatItems.map(data => this.db.categoryItem.create({data})));
       return this.db.version.findFirst({where: {id: versionCopy.id}, include: {categoryItems: true}})
     } catch (e: any) {
-      Logger.error(e, 'DB');
-      throw new Error('duplicate version error');
+      throw new HttpException(`Duplicate Version error`, HttpStatus.BAD_REQUEST);
     }
   }
 

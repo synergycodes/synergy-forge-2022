@@ -5,6 +5,7 @@ export class IntegrationEntity implements Integration {
   name: string;
   budget: number;
   participants: number;
-  date_start: Date;
-  date_end: Date;
+  picture: string;
+  dateStart: Date;
+  dateEnd: Date;
 }

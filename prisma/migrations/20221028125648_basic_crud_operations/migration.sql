@@ -19,7 +19,7 @@ CREATE TABLE "CategoryItem" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "cost" INTEGER NOT NULL,
-    "per_participant" BOOLEAN NOT NULL,
+    "perParticipant" BOOLEAN NOT NULL,
     "versionId" INTEGER NOT NULL,
     "categoryId" INTEGER NOT NULL,
     CONSTRAINT "CategoryItem_versionId_fkey" FOREIGN KEY ("versionId") REFERENCES "Version" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,

@@ -4,7 +4,7 @@ export class CategoryItemEntity implements CategoryItem {
   id: number;
   name: string;
   cost: number;
-  per_participant: boolean;
+  perParticipant: boolean;
   versionId: number;
   categoryId: number;
 

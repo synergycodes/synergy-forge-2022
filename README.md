@@ -64,3 +64,10 @@ If you change the model in `schema.prisma`, run command below to regenerate the 
 ```bash
 npm run prisma:generate
 ```
+
+### API documentation
+
+You'll find (very basic) API documentation under localhost:4242 when you run command below 
+```
+npm run api:doc
+```

@@ -1,5 +1,6 @@
-import { Logger } from "@nestjs/common";
+import { HttpException, HttpStatus, Logger } from "@nestjs/common";
 import { DatabaseService } from "@synergy-forge/api/database";
+import { NotFoundError } from "@prisma/client/runtime";
 
 export abstract class AbstractService<T, CreateTDto, UpdateTDto> {
   protected entityName!: string;
@@ -12,8 +13,8 @@ export abstract class AbstractService<T, CreateTDto, UpdateTDto> {
       // @ts-ignore
       return await this.db[this.entityName].findFirst({where: {id}});
     } catch (e: any) {
-      Logger.error(e.message, e.stack, 'DB');
-      throw new Error('query.findOne error');
+      this.logError(e);
+      throw new HttpException(`FindOne ${this.entityName} error`, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -22,8 +23,8 @@ export abstract class AbstractService<T, CreateTDto, UpdateTDto> {
       // @ts-ignore
       return await this.db[this.entityName].findMany();
     } catch (e: any) {
-      Logger.error(e.message, e.stack, 'DB');
-      throw new Error('query.findAll error');
+      this.logError(e);
+      throw new HttpException(`FindAll ${this.entityName} error`, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -32,12 +33,12 @@ export abstract class AbstractService<T, CreateTDto, UpdateTDto> {
       // @ts-ignore
       return await this.db[this.entityName].create({data});
     } catch (e: any) {
-      Logger.error(e.message, e.stack, 'DB');
-      throw new Error('query.create error');
+      this.logError(e);
+      throw new HttpException(`Create ${this.entityName} error`, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async update(id: number, data: UpdateTDto): Promise<T> {
+  async update(id: number, data: UpdateTDto): Promise<T | NotFoundError> {
     try {
       // @ts-ignore
       return await this.db[this.entityName].update({
@@ -45,8 +46,8 @@ export abstract class AbstractService<T, CreateTDto, UpdateTDto> {
         data
       })
     } catch (e: any) {
-      Logger.error(e.message, e.stack, 'DB');
-      throw new Error('query.create error');
+      this.logError(e);
+      throw new HttpException(`Update ${this.entityName} error`, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -55,8 +56,12 @@ export abstract class AbstractService<T, CreateTDto, UpdateTDto> {
       // @ts-ignore
       return await this.db[this.entityName].delete({where: {id}});
     } catch (e: any) {
-      Logger.error(e.message, e.stack, 'DB');
-      throw new Error('query.remove error');
+      this.logError(e);
+      throw new HttpException(`Remove ${this.entityName} error`, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  protected logError(e: any) {
+    Logger.error(e.message);
   }
 }

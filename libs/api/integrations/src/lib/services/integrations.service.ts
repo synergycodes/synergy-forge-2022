@@ -13,4 +13,19 @@ export class IntegrationsService extends AbstractService<IntegrationEntity, Crea
     this.entityName = 'integration';
   }
 
+  findFull(id: number) {
+    return this.db.integration.findFirst(
+      {
+        where: {id},
+        include: {
+          categories: true,
+          versions: {
+            include: {
+              categoryItems: true
+            }
+          }
+        }
+      });
+  }
+
 }
