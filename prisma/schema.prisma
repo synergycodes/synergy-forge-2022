@@ -13,8 +13,8 @@ model Integration {
   budget            Int
   participants      Int
   picture           String?
-  date_start        DateTime
-  date_end          DateTime
+  dateStart         DateTime
+  dateEnd           DateTime
   versions          Version[]
   categories        Category[]
 }
@@ -22,15 +22,16 @@ model Integration {
 model Version {
   id                Int             @id @default(autoincrement())
   name              String
-  integration       Integration     @relation(fields: [integrationId], references: [id])
+  integration       Integration     @relation(fields: [integrationId], references: [id], onDelete: Cascade)
   integrationId     Int
   categoryItems     CategoryItem[]
+  isFinal           Boolean         @default(false)
 }
 
 model Category {
   id                Int             @id @default(autoincrement())
   name              String
-  integration       Integration     @relation(fields: [integrationId], references: [id])
+  integration       Integration     @relation(fields: [integrationId], references: [id], onDelete: Cascade)
   integrationId     Int
   categoryItems     CategoryItem[]
 }
@@ -39,9 +40,9 @@ model CategoryItem {
   id                Int             @id @default(autoincrement())
   name              String
   cost              Int
-  per_participant   Boolean
-  version           Version         @relation(fields: [versionId], references: [id])
+  perParticipant    Boolean
+  version           Version         @relation(fields: [versionId], references: [id], onDelete: Cascade)
   versionId         Int
-  category          Category        @relation(fields: [categoryId], references: [id])
+  category          Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId        Int
 }

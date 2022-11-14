@@ -6,7 +6,7 @@ import { AbstractController } from "@synergy-forge/api/core";
 @Controller('integrations')
 export class IntegrationsController extends AbstractController<IntegrationEntity> {
 
-  constructor(protected service: IntegrationsService) {
+  constructor(protected override service: IntegrationsService) {
     super(service);
   }
 }

@@ -5,7 +5,7 @@ import { VersionEntity } from "../entities/version.entity";
 
 @Controller('versions')
 export class VersionsController extends AbstractController<VersionEntity> {
-  constructor(protected service: VersionsService) {
+  constructor(protected override service: VersionsService) {
     super(service);
   }
 

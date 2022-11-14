@@ -8,7 +8,7 @@ import { UpdateCategoryDto } from "../dto/update-category.dto";
 @Injectable()
 export class CategoriesService extends AbstractService<CategoryEntity, CreateCategoryDto, UpdateCategoryDto> {
 
-  constructor(protected db: DatabaseService) {
+  constructor(protected override db: DatabaseService) {
     super(db);
     this.entityName = 'category';
   }

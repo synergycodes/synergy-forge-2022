@@ -4,6 +4,6 @@ CREATE TABLE "Integration" (
     "name" TEXT NOT NULL,
     "budget" INTEGER NOT NULL,
     "participants" INTEGER NOT NULL,
-    "date_start" DATETIME NOT NULL,
-    "date_end" DATETIME NOT NULL
+    "dateStart" DATETIME NOT NULL,
+    "dateEnd" DATETIME NOT NULL
 );
