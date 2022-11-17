@@ -1,0 +1,14 @@
+<div style="display: flex; align-items: center; gap: 16px">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Number</mat-label>
+    <input matInput type="number" [(ngModel)]="value" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Power</mat-label>
+    <input matInput type="number" [(ngModel)]="power" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="getResult()">
+    Calculate
+  </button>
+  <div *ngIf="result">Result: {{ result }}</div>
+</div>
