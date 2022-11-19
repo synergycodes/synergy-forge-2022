@@ -1,0 +1,7 @@
+<ul *ngIf="itemsList != null && itemsList.length > 0; else noData">
+    <li *ngFor="let item of itemsList">{{item.name}} {{item.surname}} - {{item.age}}</li>
+</ul>
+
+<ng-template #noData>
+    <div>No data</div>
+</ng-template>

@@ -8,5 +8,4 @@ import { VersionsModule } from "@synergy-forge/api/versions";
 @Module({
   imports: [DatabaseModule, IntegrationsModule, CategoriesModule, CategoryItemsModule, VersionsModule],
 })
-export class AppModule {
-}
+export class AppModule { }
